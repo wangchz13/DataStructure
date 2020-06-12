@@ -3,7 +3,7 @@
 #include"global.h"
 
 
-//2.2 线性表的顺序表示和实现
+/***********2.2 线性表的顺序表示和实现**********/
 
 //----------线性表的动态分配顺序存储结构----------
 #define LIST_INIT_SIZE	100
@@ -65,3 +65,30 @@ void ListDelete_Sq_Od(SqList &L, ElemType s, ElemType t);
 
 //顺序表循环左移l位
 Status ListROL_Sq(SqList &L, int l);
+
+
+
+/***************2.3线性表的链式表示和实现*****************/
+
+typedef struct Node {
+	ElemType data;
+	struct Node* next;
+}LNode,*LinkList;
+
+//初始化单链表
+void InitList_L(LinkList &L);
+
+//判断单链表是否为空
+bool IsEmpty_L(LinkList L);
+
+//获取单链表L中第i个元素，用e反回
+Status GetElem_L(LinkList L, int i, ElemType &e);
+
+//按值查找表结点
+LNode *LocateElem(LinkList L, ElemType e);
+
+//在单链表第i个位置之前插入元素e
+Status ListInsert_L(LinkList &L, int i, ElemType e);
+
+//删除单链表L中第i个元素，并由e返回其值
+Status ListDelete_L(LinkList &L, int i, ElemType &e);

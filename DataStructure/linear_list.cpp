@@ -150,7 +150,67 @@ Status ListROL_Sq(SqList & L, int l) {
 	return OK;
 }
 
-Status test()
+void InitList_L(LinkList & L) {
+	if (!(L = (LinkList)malloc(sizeof(LNode)))) exit(OVERFLOW);
+	L->next == NULL;
+}
+
+bool IsEmpty_L(LinkList L)
+{
+	return L->next != NULL;
+}
+
+Status GetElem_L(LinkList L, int i, ElemType & e) {
+	LNode *p = L->next;
+	int j = 1;
+	while (p&&j < i) {
+		p = p->next;
+		++j;
+	}
+	if (!p || j > i) return ERROR;
+	e = p->data;
+	return OK;
+}
+
+LNode * LocateElem(LinkList L, ElemType e)
+{
+	LNode *p = L->next;
+	while (p &&p->data != e) p = p->next;
+	return p;
+}
+
+Status ListInsert_L(LinkList & L, int i, ElemType e) {
+	LNode *p = L;
+	int j = 0;
+	while (p && j < i - 1) {
+		p = p->next;
+		++j;
+	}
+	if (!p || j > i - 1) return ERROR;
+	LNode *s = (LNode*)malloc(sizeof(LNode));
+	s->data = e;
+	s->next = p->next;
+	p->next = s;
+	return OK;
+}
+
+Status ListDelete_L(LinkList & L, int i, ElemType & e)
+{
+	LNode *p = L,*q;
+	int j = 0;
+	while(p->next&&j < i - 1) {
+		p = p->next;
+		++j;
+	}
+	if (!p->next || j > i - 1) return ERROR;
+	q = p->next;
+	p->next = q->next;
+	e = q->data;
+	free(q);
+	return OK;
+}
+
+Status zend()
 {
 	return Status();
 }
