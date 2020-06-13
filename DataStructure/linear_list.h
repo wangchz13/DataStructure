@@ -92,3 +92,12 @@ Status ListInsert_L(LinkList &L, int i, ElemType e);
 
 //删除单链表L中第i个元素，并由e返回其值
 Status ListDelete_L(LinkList &L, int i, ElemType &e);
+
+//打印链表
+void PrintList_L(LinkList L);
+//打印链表：将数字转换为字符
+void PrintList_L_c(LinkList L);
+
+//打印数组
+void PrintArray(int *A, int n);
+

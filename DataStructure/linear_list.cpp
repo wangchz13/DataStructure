@@ -152,7 +152,7 @@ Status ListROL_Sq(SqList & L, int l) {
 
 void InitList_L(LinkList & L) {
 	if (!(L = (LinkList)malloc(sizeof(LNode)))) exit(OVERFLOW);
-	L->next == NULL;
+	L->next = NULL;
 }
 
 bool IsEmpty_L(LinkList L)
@@ -209,6 +209,40 @@ Status ListDelete_L(LinkList & L, int i, ElemType & e)
 	free(q);
 	return OK;
 }
+
+void PrintList_L(LinkList L) {
+	printf("HEAD->");
+	LNode *p = L->next;
+	while (p) {
+		printf("[%d]->", p->data);
+		p = p->next;
+	}
+	printf("NULL\n");
+}
+
+void PrintList_L_c(LinkList L) {
+	printf("HEAD->");
+	LNode *p = L->next;
+	while (p) {
+		printf("[%c]->", (char)p->data);
+		p = p->next;
+	}
+	printf("NULL\n");
+}
+
+void PrintArray(int * A, int n) {
+	printf("[");
+	for (int i = 0; i < n; i++)
+	{
+		if (i != n - 1)
+			printf("%d,", A[i]);
+		else
+			printf("%d", A[i]);
+	}
+	printf("]\n");
+}
+
+
 
 Status zend()
 {

@@ -123,10 +123,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="f2.h" />
     <ClInclude Include="global.h" />
     <ClInclude Include="linear_list.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="f2.cpp" />
     <ClCompile Include="linear_list.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
