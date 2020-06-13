@@ -90,8 +90,14 @@ LNode *LocateElem(LinkList L, ElemType e);
 //在单链表第i个位置之前插入元素e
 Status ListInsert_L(LinkList &L, int i, ElemType e);
 
+//在链表后面追加字符串=字符串被分割成一个个元素进行追加
+void ListAppend_L(LinkList L, const char *s);
+
 //删除单链表L中第i个元素，并由e返回其值
 Status ListDelete_L(LinkList &L, int i, ElemType &e);
+
+//单链表逆置
+void ListReverse_L(LinkList &L);
 
 //打印链表
 void PrintList_L(LinkList L);

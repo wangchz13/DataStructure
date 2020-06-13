@@ -167,7 +167,7 @@ void f2_5_test()
 	PrintList_L(L);
 }
 
-void f2_6(LinkList &La, LinkList Lb)
+void f2_6(LinkList &La, LinkList &Lb)
 {
 	LNode *p = La->next, *q = Lb->next,*r;
 	La->next = NULL;
@@ -213,5 +213,291 @@ void f2_6_test()
 	PrintList_L(Lb);
 	printf("合并后:\n");
 	f2_6(La, Lb);
+	PrintList_L(La);
+}
+
+void f2_7(LinkList &La, LinkList &Lb)
+{	//La升序，Lb降序
+	//先将Lb逆置为升序表，再与La头插法进行归并，得到一个降序表
+	ListReverse_L(Lb);
+	f2_6(La, Lb);
+}
+
+void f2_7_test()
+{
+	LinkList La, Lb;
+	InitList_L(La), InitList_L(Lb);
+	ListInsert_L(La, 1, 1);
+	ListInsert_L(La, 2, 2);
+	ListInsert_L(La, 3, 3);
+	ListInsert_L(La, 4, 4);
+	ListInsert_L(La, 5, 5);
+	ListInsert_L(Lb, 1, 6);
+	ListInsert_L(Lb, 2, 5);
+	ListInsert_L(Lb, 3, 2);
+	ListInsert_L(Lb, 4, 1);
+	printf("合并前:\n");
+	PrintList_L(La);
+	PrintList_L(Lb);
+	printf("合并后:\n");
+	f2_7(La, Lb);
+	PrintList_L(La);
+}
+
+void f2_8(LinkList & La, LinkList & Lb)
+{
+	//先将La逆置为降序表，再与Lb头插法归并，得到一个升序表
+	//代码略
+}
+
+void f2_8_test()
+{
+}
+
+void f2_9(LinkList & La, LinkList & Lb)
+{
+}
+
+void f2_9_test()
+{
+}
+
+void f2_10(LinkList & La, LinkList & Lb)
+{
+	//先去重，然后使用尾插法这样的到的链表就是递增有序的
+	LNode*pa = La->next, *pb = Lb->next, *q,*r=NULL;//pa,pb为La Lb工作指针，q为临时指针，r为La表尾元素指针
+	La->next = NULL;
+	while (pa && pb) {
+		if (pa->data <= pb->data) {//此时选择pa插入到表尾，当pa->data == r->data时，不进行插入
+			if (!r) {//初始时r指向La->next,防止和La->data作比较
+				q = pa->next;
+				pa->next = La->next;
+				La->next = pa;
+				pa = q;
+				r = La->next;
+			}
+			else {
+				q = pa->next;
+				if (r->data != pa->data) {
+					pa->next = r->next;
+					r->next = pa;
+					r = r->next;
+				}
+				pa = q;
+			}
+		}
+		else {
+			if (!r) {//和上面代码逻辑一样
+				q = pb->next;
+				pb->next = La->next;
+				La->next = pb;
+				pb = q;
+				r = La->next;
+			}
+			else {
+				q = pb->next;
+				if (r->data != pb->data) {
+					pb->next = r->next;
+					r->next = pb;
+					r = r->next;
+				}
+				pb = q;
+			}
+		}
+	}
+	if (pb) pa = pb;
+	while (pa) {
+		q = pa->next;
+		if (r->data != pa->data) {
+			pa->next = r->next;
+			r->next = pa;
+			r = r->next;
+		}
+		pa = q;
+	}
+}
+
+void f2_10_test()
+{
+	LinkList La, Lb;
+	InitList_L(La), InitList_L(Lb);
+	ListInsert_L(La, 1, 1);
+	ListInsert_L(La, 2, 2);
+	ListInsert_L(La, 3, 3);
+	ListInsert_L(La, 4, 3);
+	ListInsert_L(La, 5, 5);
+	ListInsert_L(Lb, 1, 2);
+	ListInsert_L(Lb, 2, 2);
+	ListInsert_L(Lb, 3, 3);
+	ListInsert_L(Lb, 4, 6);
+	printf("合并前:\n");
+	PrintList_L(La);
+	PrintList_L(Lb);
+	printf("合并后:\n");
+	f2_10(La, Lb);
+	PrintList_L(La);
+}
+
+void f2_11(LinkList & La, LinkList & Lb)
+{
+	LNode *pa = La->next, *pb = Lb->next, *q;
+	La->next = NULL;
+	while (pa && pb) {
+		if (pa->data == pb->data) {
+			ElemType e = pa->data;
+			q = pa->next;
+			pa->next = La->next;
+			La->next = pa;
+			pa = q;
+			while (pa && pa->data == e) pa = pa->next;
+			while (pb && pb->data == e) pb = pb->next;
+		}
+		else
+			pa = pa->next;
+	}
+}
+
+void f2_11_test()
+{
+	LinkList La, Lb;
+	InitList_L(La), InitList_L(Lb);
+	ListInsert_L(La, 1, 1);
+	ListInsert_L(La, 2, 2);
+	ListInsert_L(La, 3, 3);
+	ListInsert_L(La, 4, 3);
+	ListInsert_L(La, 5, 5);
+	ListInsert_L(Lb, 1, 2);
+	ListInsert_L(Lb, 2, 2);
+	ListInsert_L(Lb, 3, 3);
+	ListInsert_L(Lb, 4, 6);
+	printf("原链表:\n");
+	PrintList_L(La);
+	PrintList_L(Lb);
+	printf("求交集:\n");
+	f2_11(La, Lb);
+	PrintList_L(La);
+}
+
+void f2_12(LinkList & La, LinkList & Lb)
+{
+	f2_11(La, Lb);
+	ListReverse_L(La);
+}
+
+void f2_12_test()
+{
+	LinkList La, Lb;
+	InitList_L(La), InitList_L(Lb);
+	ListInsert_L(La, 1, 1);
+	ListInsert_L(La, 2, 2);
+	ListInsert_L(La, 3, 3);
+	ListInsert_L(La, 4, 3);
+	ListInsert_L(La, 5, 5);
+	ListInsert_L(Lb, 1, 2);
+	ListInsert_L(Lb, 2, 2);
+	ListInsert_L(Lb, 3, 3);
+	ListInsert_L(Lb, 4, 6);
+	printf("原链表:\n");
+	PrintList_L(La);
+	PrintList_L(Lb);
+	printf("求交集:\n");
+	f2_12(La, Lb);
+	PrintList_L(La);
+}
+
+void f2_13(LinkList & La, LinkList & Lb, LinkList & Lc)
+{
+	LNode *pa = La->next, *pb = Lb->next, *q,*r=Lc;
+	//La->next = NULL;
+	while (pa && pb) {
+		if (pa->data == pb->data) {
+			ElemType e = pa->data;
+			q = (LNode*)malloc(sizeof(LNode));
+			q->data = pa->data;
+			q->next = r->next;
+			r->next = q;
+			r = r->next;
+			while (pa && pa->data == e) pa = pa->next;
+			while (pb && pb->data == e) pb = pb->next;
+		}
+		else
+			pa = pa->next;
+	}
+}
+
+void f2_13_test()
+{
+	LinkList La, Lb, Lc;
+	InitList_L(La), InitList_L(Lb), InitList_L(Lc);
+	ListAppend_L(La, "12335"), ListAppend_L(Lb, "2236");
+	printf("原链表:\n");
+	PrintList_L(La); PrintList_L(Lb);
+	printf("求交集后:\n");
+	f2_13(La, Lb, Lc);
+	PrintList_L(Lc);
+}
+
+void f2_14(LinkList & La, LinkList & Lb, LinkList & Lc)
+{
+	//先求 B∩C
+	f2_12(Lb, Lc);
+	//再求A∪(B∩C)
+	f2_10(La, Lb);
+}
+
+void f2_14_test()
+{
+	LinkList La, Lb, Lc;
+	InitList_L(La), InitList_L(Lb), InitList_L(Lc);
+	ListAppend_L(La, "12335");
+	ListAppend_L(Lb, "2236");
+	ListAppend_L(Lc, "2367");
+	printf("原链表:\n");
+	PrintList_L(La);
+	PrintList_L(Lb); 
+	PrintList_L(Lc);
+	printf("A∪(B∩C):\n");
+	f2_14(La, Lb, Lc);
+	PrintList_L(La);
+}
+
+void f2_15(LinkList & La, LinkList & Lb)
+{
+	LNode *pa = La->next, *pb = Lb->next,*q,*r = La;
+	La->next = NULL;
+	while (pa && pb) {
+		if (pa->data == pb->data) {
+			ElemType e = pa->data;
+			while (pa && pa->data == e) pa = pa->next;
+			while (pb && pb->data == e) pb = pb->next;
+		}
+		else {
+			q = pa->next;
+			pa->next = r->next;
+			r->next = pa;
+			r = r->next;
+			pa = q;
+		}
+	}
+	while (pa) {
+		q = pa->next;
+		pa->next = r->next;
+		r->next = pa;
+		r = r->next;
+		pa = q;
+	}
+}
+
+void f2_15_test()
+{
+	LinkList La, Lb;
+	InitList_L(La), InitList_L(Lb);
+	ListAppend_L(La, "123456789");
+	ListAppend_L(Lb, "2223335");
+	printf("原链表:\n");
+	PrintList_L(La);
+	PrintList_L(Lb);
+	printf("A-B:\n");
+	f2_15(La, Lb);
 	PrintList_L(La);
 }

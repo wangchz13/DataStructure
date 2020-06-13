@@ -194,6 +194,19 @@ Status ListInsert_L(LinkList & L, int i, ElemType e) {
 	return OK;
 }
 
+void ListAppend_L(LinkList L,const char * s)
+{
+	LNode *p = L,*q;
+	while (p->next) { p = p->next; }
+	for (int i = 0; s[i] != '\0'; i++) {
+		q = (LNode*)malloc(sizeof(LNode));
+		q->data = (s[i] >= '0'&&s[i] <= '9') ? (ElemType)(s[i] - '0') : s[i];
+		q->next = p->next;
+		p->next = q;
+		p = p->next;
+	}
+}
+
 Status ListDelete_L(LinkList & L, int i, ElemType & e)
 {
 	LNode *p = L,*q;
@@ -208,6 +221,18 @@ Status ListDelete_L(LinkList & L, int i, ElemType & e)
 	e = q->data;
 	free(q);
 	return OK;
+}
+
+void ListReverse_L(LinkList & L)
+{
+	LNode *p = L->next, *q;
+	L->next = NULL;
+	while (p) {
+		q = p->next;
+		p->next = L->next;
+		L->next = p;
+		p = q;
+	}
 }
 
 void PrintList_L(LinkList L) {
@@ -244,9 +269,9 @@ void PrintArray(int * A, int n) {
 
 
 
-Status zend()
+void zend()
 {
-	return Status();
+	
 }
 
 
