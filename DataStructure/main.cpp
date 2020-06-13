@@ -3,6 +3,6 @@
 
 int main()
 {
-	f2_5_test();
+	f2_6_test();
 	return 0;
 }

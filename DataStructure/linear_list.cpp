@@ -211,7 +211,7 @@ Status ListDelete_L(LinkList & L, int i, ElemType & e)
 }
 
 void PrintList_L(LinkList L) {
-	printf("HEAD->");
+	printf("[HEAD]->");
 	LNode *p = L->next;
 	while (p) {
 		printf("[%d]->", p->data);

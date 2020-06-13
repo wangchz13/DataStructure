@@ -23,3 +23,7 @@ void f2_4_test();
 //2.5对单链表绝对值相等的结点去重
 void f2_5(LinkList head,int m,int n);
 void f2_5_test();
+
+//2.6将两个递增的单链表合并为一个递减的单链表
+void f2_6(LinkList &La, LinkList Lb);
+void f2_6_test();
